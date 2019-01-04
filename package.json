@@ -1,0 +1,25 @@
+{
+  "name": "forkify-clone",
+  "version": "1.0.0",
+  "description": "forkify project clone",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabantonelli/forkify-clone.git"
+  },
+  "author": "Gabriel Antonelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabantonelli/forkify-clone/issues"
+  },
+  "homepage": "https://github.com/gabantonelli/forkify-clone#readme",
+  "devDependencies": {
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.0",
+    "webpack-dev-server": "^3.1.14"
+  }
+}
