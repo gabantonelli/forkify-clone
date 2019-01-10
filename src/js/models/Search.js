@@ -14,7 +14,6 @@ export default class Search {
         }&q=${this.query}`
       );
       this.result = res.data.recipes;
-      console.log(this.result);
     } catch (error) {
       alert(error);
     }
