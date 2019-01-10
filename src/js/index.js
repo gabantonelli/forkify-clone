@@ -7,7 +7,7 @@
 // console.log(multiply(ID, 2));
 import Search from "./models/Search";
 import * as searchView from "./views/searchView";
-import { elements } from "./views/base";
+import { elements, renderLoader, clearLoader } from "./views/base";
 
 /** GLOBAL STATE OF THE APP in other complex apps done by Redux
  * - Search object with all data about the search query and results
@@ -24,14 +24,29 @@ const controlSearch = async () => {
     //2. new search object and add it to state
     state.search = new Search(query);
     //3. prepare for displaying results on UI
+    // clear previous results
+    searchView.clearResults();
+    renderLoader(elements.searchRes);
+    // clear input field
+    searchView.clearInput();
     //4. search for recipes
     await state.search.getResults();
     //5. render results on UI
-    console.log(state.search.result);
+    clearLoader();
+    searchView.renderResults(state.search.result);
   }
 };
 
 elements.searchForm.addEventListener("submit", e => {
   e.preventDefault(); //to stop the page from reloading when submitting
   controlSearch();
+});
+
+elements.searchResPages.addEventListener("click", e => {
+  const btn = e.target.closest("button");
+  if (btn) {
+    const goToPage = parseInt(btn.dataset.goto, 10);
+    searchView.clearResults();
+    searchView.renderResults(state.search.result, goToPage);
+  }
 });
