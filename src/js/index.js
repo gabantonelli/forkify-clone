@@ -7,7 +7,7 @@
 // console.log(multiply(ID, 2));
 import Search from "./models/Search";
 import * as searchView from "./views/searchView";
-import { elements } from "./views/base";
+import { elements, renderLoader, clearLoader } from "./views/base";
 
 /** GLOBAL STATE OF THE APP in other complex apps done by Redux
  * - Search object with all data about the search query and results
@@ -26,11 +26,13 @@ const controlSearch = async () => {
     //3. prepare for displaying results on UI
     // clear previous results
     searchView.clearResults();
+    renderLoader(elements.searchRes);
     // clear input field
     searchView.clearInput();
     //4. search for recipes
     await state.search.getResults();
     //5. render results on UI
+    clearLoader();
     searchView.renderResults(state.search.result);
   }
 };
