@@ -27,6 +27,7 @@ const controlSearch = async () => {
     //4. search for recipes
     await state.search.getResults();
     //5. render results on UI
+    searchView.renderResults(state.search.result);
     console.log(state.search.result);
   }
 };
