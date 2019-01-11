@@ -6,6 +6,7 @@
 // // import * as searchView from './views/searchView' e poi richiamarli con searchView.a, searchView.ID etc...
 // console.log(multiply(ID, 2));
 import Search from "./models/Search";
+import Recipe from "./models/Recipe";
 import * as searchView from "./views/searchView";
 import { elements, renderLoader, clearLoader } from "./views/base";
 
@@ -50,3 +51,31 @@ elements.searchResPages.addEventListener("click", e => {
     searchView.renderResults(state.search.result, goToPage);
   }
 });
+
+/**
+ *  RECIPE CONTROLLER
+ */
+
+const controlRecipe = async () => {
+  //get id from the hash in the URL
+  const id = window.location.hash.replace("#", "");
+  if (id) {
+    //prepare ui for changes
+    // create new recipe object
+    state.recipe = new Recipe(id);
+    try {
+      // get recipe data
+      await state.recipe.getRecipe();
+      // calc servings and time
+      state.recipe.calcServings();
+      state.recipe.calcTime();
+      state.recipe.parseIngredients();
+      console.log(state.recipe);
+      // render recipe
+    } catch (error) {
+      alert(error);
+    }
+  }
+};
+
+["hashchange", "load"].forEach(e => window.addEventListener(e, controlRecipe));
