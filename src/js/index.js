@@ -8,6 +8,7 @@
 import Search from "./models/Search";
 import Recipe from "./models/Recipe";
 import * as searchView from "./views/searchView";
+import * as recipeView from "./views/recipeView";
 import { elements, renderLoader, clearLoader } from "./views/base";
 
 /** GLOBAL STATE OF THE APP in other complex apps done by Redux
@@ -61,6 +62,8 @@ const controlRecipe = async () => {
   const id = window.location.hash.replace("#", "");
   if (id) {
     //prepare ui for changes
+    recipeView.clearRecipe();
+    renderLoader(elements.recipe);
     // create new recipe object
     state.recipe = new Recipe(id);
     try {
@@ -71,6 +74,8 @@ const controlRecipe = async () => {
       state.recipe.calcServings();
       state.recipe.calcTime();
       // render recipe
+      clearLoader();
+      recipeView.renderRecipe(state.recipe);
     } catch (error) {
       alert(error);
     }
