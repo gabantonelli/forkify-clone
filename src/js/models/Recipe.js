@@ -67,7 +67,7 @@ export default class Recipe {
       const arrIng = ingredient.split(" ");
       const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2));
 
-      let objIng = {};
+      let objIng;
       if (unitIndex > -1) {
         //there's a unit
         const arrCount = arrIng.slice(0, unitIndex);
@@ -86,6 +86,7 @@ export default class Recipe {
         //there isn't a unit but is a number
         objIng = {
           count: parseInt(arrIng[0], 10),
+          unit: "",
           ingredient: arrIng.slice(1).join(" ")
         };
       } else if (unitIndex === -1) {
