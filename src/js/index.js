@@ -23,8 +23,6 @@ import { elements, renderLoader, clearLoader } from "./views/base";
  */
 const state = {};
 
-window.state = state; //TODO REMOVE THIS LINE FOR TESTING
-
 const controlSearch = async () => {
   //1. get query from the view
   const query = searchView.getInput();
@@ -109,8 +107,6 @@ const controlList = () => {
 /**
  *  LIKES CONTROLLER
  */
-state.likes = new Likes(); //todo remove in future
-likesView.toggleLikeMenu(state.likes.getNumLikes()); //todo remove in future
 
 const controlLike = () => {
   if (!state.likes) state.likes = new Likes();
@@ -138,6 +134,14 @@ const controlLike = () => {
   }
   likesView.toggleLikeMenu(state.likes.getNumLikes());
 };
+
+// Restore liked recipes on page load
+window.addEventListener("load", () => {
+  state.likes = new Likes();
+  state.likes.readStorage();
+  likesView.toggleLikeMenu(state.likes.getNumLikes());
+  state.likes.likes.forEach(like => likesView.renderLike(like));
+});
 
 //handle delete and update list events
 elements.shopping.addEventListener("click", e => {
