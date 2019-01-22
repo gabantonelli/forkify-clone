@@ -4,6 +4,7 @@ import { Fraction } from "fractional";
 const formatCount = count => {
   if (count) {
     //count = 2.5 --> 2 1/2
+    count = Math.round(count * 1000) / 1000;
     const [int, dec] = count
       .toString()
       .split(".")
